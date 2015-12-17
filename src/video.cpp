@@ -8,29 +8,21 @@ libvlc_media_player_t *g_mediaPlayer;
 // ----------------------------
 // VLC lib function definitions
 // ----------------------------
-typedef libvlc_instance_t *__stdcall libvlc_new_func(int, const char *const *);
-libvlc_new_func *_libvlc_new;
 
-typedef libvlc_media_t *__stdcall libvlc_media_new_path_func(libvlc_instance_t *, const char *);
-libvlc_media_new_path_func *_libvlc_media_new_path;
+#define DLL_FUNC(name)                  \
+    typedef decltype(name) name##_func; \
+    name##_func *_##name
 
-typedef libvlc_media_player_t *__stdcall libvlc_media_player_new_from_media_func(libvlc_media_t *p_md);
-libvlc_media_player_new_from_media_func *_libvlc_media_player_new_from_media;
+DLL_FUNC(libvlc_new);
+DLL_FUNC(libvlc_media_new_path);
+DLL_FUNC(libvlc_media_player_new_from_media);
+DLL_FUNC(libvlc_media_release);
+DLL_FUNC(libvlc_media_player_set_hwnd);
+DLL_FUNC(libvlc_media_player_play);
+DLL_FUNC(libvlc_media_player_get_time);
+DLL_FUNC(libvlc_media_player_set_time);
 
-typedef void __stdcall libvlc_media_release_func(libvlc_media_t *p_md);
-libvlc_media_release_func *_libvlc_media_release;
-
-typedef void libvlc_media_player_set_hwnd_func(libvlc_media_player_t *p_mi, void *drawable);
-libvlc_media_player_set_hwnd_func *_libvlc_media_player_set_hwnd;
-
-typedef int __stdcall libvlc_media_player_play_func(libvlc_media_player_t *p_mi);
-libvlc_media_player_play_func *_libvlc_media_player_play;
-
-typedef libvlc_time_t __stdcall libvlc_media_player_get_time_func(libvlc_media_player_t *p_mi);
-libvlc_media_player_get_time_func *_libvlc_media_player_get_time;
-
-typedef void __stdcall libvlc_media_player_set_time_func(libvlc_media_player_t *p_mi, libvlc_time_t i_time);
-libvlc_media_player_set_time_func *_libvlc_media_player_set_time;
+#undef DLL_FUNC
 
 // -------------------------
 // Library functions loading
